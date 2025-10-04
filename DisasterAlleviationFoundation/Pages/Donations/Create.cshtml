@@ -1,0 +1,40 @@
+﻿@page
+@model DisasterAlleviationFoundation.Pages.Donations.CreateModel
+@{
+    ViewData["Title"] = "Submit Donation";
+}
+
+<h1>Submit a Donation</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Donation.DonorName"></label>
+        <input asp-for="Donation.DonorName" class="form-control" />
+        <span asp-validation-for="Donation.DonorName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Donation.ResourceType"></label>
+        <input asp-for="Donation.ResourceType" class="form-control" />
+        <span asp-validation-for="Donation.ResourceType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Donation.Description"></label>
+        <textarea asp-for="Donation.Description" class="form-control"></textarea>
+        <span asp-validation-for="Donation.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Donation.Quantity"></label>
+        <input asp-for="Donation.Quantity" class="form-control" type="number" />
+        <span asp-validation-for="Donation.Quantity" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Donation.DateDonated"></label>
+        <input asp-for="Donation.DateDonated" class="form-control" type="date" />
+        <span asp-validation-for="Donation.DateDonated" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

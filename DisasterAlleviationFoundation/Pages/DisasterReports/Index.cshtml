@@ -1,0 +1,31 @@
+﻿@page
+@model DisasterAlleviationFoundation.Pages.DisasterReports.IndexModel
+@{
+    ViewData["Title"] = "Disaster Reports";
+}
+
+<h1>Disaster Reports</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Location</th>
+            <th>Severity</th>
+            <th>Description</th>
+            <th>Date Reported</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var report in Model.Reports)
+        {
+            <tr>
+                <td>@report.Type</td>
+                <td>@report.Location</td>
+                <td>@report.Severity</td>
+                <td>@report.Description</td>
+                <td>@report.DateReported.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
