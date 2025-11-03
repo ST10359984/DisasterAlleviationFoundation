@@ -55,7 +55,7 @@ namespace DisasterAlleviationFoundation.Tests
             Assert.AreEqual(100, savedDonation.Quantity);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public async Task OnPostAsync_ShouldReturnPage_WhenModelStateIsInvalid()
         {
             var newDonation = new Donation
