@@ -5,6 +5,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
+using WebDriverManager.Helpers;
 
 namespace DisasterAlleviationFoundation.Tests
 {
@@ -12,16 +13,18 @@ namespace DisasterAlleviationFoundation.Tests
     public class FunctionalUITests
     {
         private IWebDriver _driver = null!;
-
         private const string AppUrl = "http://localhost:5270";
-
         private const string TestUserEmail = "test@example.com";
-        private const string TestUserPassword = "Password123!";
+        private const string TestUserPassword = "Password@123";
 
         [TestInitialize]
         public void Setup()
         {
-            new DriverManager().SetUpDriver(new ChromeConfig());
+
+            new DriverManager().SetUpDriver(
+                new ChromeConfig(),
+                VersionResolveStrategy.MatchingBrowser
+            );
 
             _driver = new ChromeDriver();
         }
@@ -49,7 +52,11 @@ namespace DisasterAlleviationFoundation.Tests
         [TestCleanup]
         public void Teardown()
         {
-            _driver.Quit();
+            if (_driver != null)
+            {
+                _driver.Quit();
+            }
         }
     }
 }
+
