@@ -54,5 +54,30 @@ namespace DisasterAlleviationFoundation.Tests
             Assert.AreEqual("Test Donor", savedDonation.DonorName);
             Assert.AreEqual(100, savedDonation.Quantity);
         }
+
+        [TestMethod] 
+        public async Task OnPostAsync_ShouldReturnPage_WhenModelStateIsInvalid()
+        {
+            var newDonation = new Donation
+            {
+                ResourceType = "Water",
+                Description = "100 bottles",
+                Quantity = 100,
+                DateDonated = DateTime.Now
+            };
+
+            _pageModel.Donation = newDonation;
+
+
+            _pageModel.ModelState.AddModelError("Donation.DonorName", "The DonorName field is required.");
+
+
+            var result = await _pageModel.OnPostAsync();
+
+
+            Assert.IsInstanceOfType(result, typeof(PageResult));
+
+            Assert.AreEqual(0, _context.Donations.Count());
+        }
     }
 }
