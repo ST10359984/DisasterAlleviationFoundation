@@ -1,0 +1,47 @@
+# This is the trigger. It runs the pipeline on every push to the 'main' branch.
+trigger:
+- main
+
+# This tells the pipeline to use a server (build agent) running Windows.
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+# 1. BUILD TASK
+- task: DotNetCoreCLI@2
+  displayName: 'Build'
+  inputs:
+    command: 'build'
+    projects: '$(solution)'
+    arguments: '--configuration $(buildConfiguration)'
+
+# 2. TEST TASK
+- task: DotNetCoreCLI@2
+  displayName: 'Test'
+  inputs:
+    command: 'test'
+    projects: '**/*Tests/*.csproj' # Finds your .Tests project
+    # This filter runs ALL tests EXCEPT those we tagged.
+    arguments: '--configuration $(buildConfiguration) --filter "TestCategory!=Integration&TestCategory!=UI"'
+
+# 3. PACKAGE TASK
+- task: DotNetCoreCLI@2
+  displayName: 'Publish'
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+
+# 4. DEPLOY TASK
+- task: AzureWebApp@1
+  displayName: 'Deploy to Azure App Service'
+  inputs:
+    azureSubscription: '' # <-- AUTHORIZE HERE
+    appName: ''             # <-- PUT YOUR APP NAME HERE (e.g., 'DAF-App-YourName')
+    package: '$(Build.ArtifactStagingDirectory)/*.zip'
