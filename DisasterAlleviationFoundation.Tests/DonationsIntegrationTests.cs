@@ -13,6 +13,7 @@ using System.Linq;
 
 namespace DisasterAlleviationFoundation.Tests
 {
+    [TestCategory("Integration")]
     [TestClass]
     public class DonationsIntegrationTests
     {

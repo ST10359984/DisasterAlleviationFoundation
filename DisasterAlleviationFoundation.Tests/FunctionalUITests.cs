@@ -9,6 +9,7 @@ using WebDriverManager.Helpers;
 
 namespace DisasterAlleviationFoundation.Tests
 {
+    [TestCategory("UI")]
     [TestClass]
     public class FunctionalUITests
     {
