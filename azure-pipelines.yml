@@ -42,6 +42,6 @@ steps:
 - task: AzureWebApp@1
   displayName: 'Deploy to Azure App Service'
   inputs:
-    azureSubscription: '' # <-- AUTHORIZE HERE
-    appName: ''             # <-- PUT YOUR APP NAME HERE (e.g., 'DAF-App-YourName')
+    azureSubscription: ''
+    Disaster Avilliation Foundation: ''     
     package: '$(Build.ArtifactStagingDirectory)/*.zip'
